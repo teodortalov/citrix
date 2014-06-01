@@ -1,7 +1,7 @@
 <?php
 namespace Citrix;
 
-class Citrix extends ServiceAbstract
+class Citrix extends ServiceAbstract implements CitrixApiAware
 {
 
   public $host = 'api.citrixonline.com';
@@ -13,6 +13,7 @@ class Citrix extends ServiceAbstract
   public $authorize_url = 'https://api.citrixonline.com/oauth/access_token';
 
   private $apiKey;
+  private $accessToken;
 
   public function __construct($apiKey)
   {
@@ -27,8 +28,15 @@ class Citrix extends ServiceAbstract
       'password' => $password,
       'client_id' => $this->getApiKey()
     );
-    $this->setUrl($this->authorize_url)->setParams($params)->sendRequest();
-    var_dump($params);
+    
+    
+    $this->setHttpMethod('GET')
+         ->setUrl($this->authorize_url)
+         ->setParams($params)
+         ->sendRequest()
+         ->processResponse();
+    
+    
   }
 
   /**
@@ -50,6 +58,30 @@ class Citrix extends ServiceAbstract
     
     return $this;
   }
+  
+  public function processResponse(){
+    $response = $this->getResponse();
+    $this->setAccessToken($response['access_token']);
+    return $this;
+  }
+/**
+ * @return the $accessToken
+ */
+public function getAccessToken()
+  {
+    return $this->accessToken;
+}
+
+/**
+ * @param field_type $accessToken
+ */
+public function setAccessToken($accessToken)
+  {
+    $this->accessToken = $accessToken;
+    
+    return $this;
+}
+
 }
 
 ?>
