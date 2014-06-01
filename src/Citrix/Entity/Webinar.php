@@ -35,9 +35,9 @@ class Webinar extends EntityAbstract implements EntityAware
   }
   public function registerConsumer(\Citrix\Entity\Consumer $consumer){
     $goToWebinar = new GoToWebinar($this->getClient());
-    $registrants = $goToWebinar->register($this->getId(), $consumer->toArray());
+    $goToWebinar->register($this->getId(), $consumer->toArray());
 
-    return $registrants;
+    return $goToWebinar;
   }
 /**
  * @return the $description
