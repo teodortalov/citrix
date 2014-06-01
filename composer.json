@@ -1,0 +1,20 @@
+{
+    "name": "ttalov/citrix",
+    "description": "GoToMeeting and GoToWebinar API Interface in PHP",
+    "license": "MTI",
+    "authors": [
+        {
+            "name": "Teodor Talov",
+            "email": "teodor@talov.com"
+        }
+    ],
+    "autoload" : {
+        "psr-0" : {
+            "Citrix" : "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+
+    }
+}
