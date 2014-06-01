@@ -7,9 +7,10 @@ require_once 'vendor/autoload.php';
 
 use Citrix\Citrix;
 use Citrix\GoToWebinar;
+use Citrix\Entity\Consumer;
 
-$client = new Citrix('ZOyODCZyVVDHCrMzzcwqOvqXaG5iAmpX');
-
+$client = new Citrix('CONSUMER_KEY');
+$client->auth('USERNAME', 'PASSWORD');
 
 $goToWebinar = new GoToWebinar($client);
 $webinars = $goToWebinar->getUpcoming();
@@ -20,4 +21,8 @@ $webinarInfo = $goToWebinar->getWebinar($webinar->getId());
 $registrants = $webinar->getRegistrants();
 var_dump($registrants);
 
+$data = array('email' => 'teodor@talov.com', 'firstName' => 'Teodor', 'lastName' => 'Talov');
+$consumer = new Consumer($client);
+$consumer->setData($data)->populate();
 
+$webinar->registerConsumer($consumer);
