@@ -9,23 +9,31 @@ abstract class ServiceAbstract
   private $params = array();
 
   private $url;
-
+  
   private $response;
-
+  
   private $httpMethod = 'POST';
 
-  public function sendRequest()
-  {
+  public function sendRequest($oauthToken = null){
     $url = $this->getUrl();
     $ch = curl_init(); // initiate curl
     
-    if ($this->getHttpMethod() == 'POST') {
+    if($this->getHttpMethod() == 'POST'){
       curl_setopt($ch, CURLOPT_POST, true); // tell curl you want to post something
       curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParams()); // define what you want to post
-    } else {
+    }else{
       $url = $this->getUrl();
       $query = http_build_query($this->getParams());
       $url = $url . '?' . $query;
+    }
+    
+    if(!is_null($oauthToken)){
+      $headers = array(
+        'Content-Type: application/json',
+        'Accept: application/json',
+        'Authorization: OAuth oauth_token='.$oauthToken,
+      );
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     }
     
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -119,46 +127,42 @@ abstract class ServiceAbstract
     
     return $this;
   }
-
-  /**
-   *
-   * @return the $response
-   */
-  public function getResponse()
+/**
+ * @return the $response
+ */
+public function getResponse()
   {
     return $this->response;
-  }
+}
 
-  /**
-   *
-   * @param field_type $response          
-   */
-  public function setResponse($response)
+/**
+ * @param field_type $response
+ */
+public function setResponse($response)
   {
-    $this->response = (array) json_decode($response);
-    
+   
+    $this->response = (array) json_decode($response, true);
     return $this;
-  }
-
-  /**
-   *
-   * @return the $httpMethod
-   */
-  public function getHttpMethod()
+}
+/**
+ * @return the $httpMethod
+ */
+public function getHttpMethod()
   {
     return $this->httpMethod;
-  }
+}
 
-  /**
-   *
-   * @param string $httpMethod          
-   */
-  public function setHttpMethod($httpMethod)
+/**
+ * @param string $httpMethod
+ */
+public function setHttpMethod($httpMethod)
   {
     $this->httpMethod = $httpMethod;
     
     return $this;
-  }
+}
+
+
 }
 
 ?>

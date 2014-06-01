@@ -3,18 +3,11 @@ namespace Citrix;
 
 class Citrix extends ServiceAbstract implements CitrixApiAware
 {
-
-  public $host = 'api.citrixonline.com';
-
-  public $basePath = '/G2W/rest';
-
-  public $protocol = 'https';
-
-  public $authorize_url = 'https://api.citrixonline.com/oauth/access_token';
+  private $authorizeUrl = 'https://api.citrixonline.com/oauth/access_token';
 
   private $apiKey;
   private $accessToken;
-
+  private $organizerKey;
   public function __construct($apiKey)
   {
     $this->setApiKey($apiKey);
@@ -29,14 +22,13 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
       'client_id' => $this->getApiKey()
     );
     
-    
     $this->setHttpMethod('GET')
-         ->setUrl($this->authorize_url)
+         ->setUrl($this->authorizeUrl)
          ->setParams($params)
          ->sendRequest()
          ->processResponse();
     
-    
+    return $this;
   }
 
   /**
@@ -62,6 +54,7 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
   public function processResponse(){
     $response = $this->getResponse();
     $this->setAccessToken($response['access_token']);
+    $this->setOrganizerKey($response['organizer_key']);
     return $this;
   }
 /**
@@ -81,6 +74,42 @@ public function setAccessToken($accessToken)
     
     return $this;
 }
+/**
+ * @return the $authorizeUrl
+ */
+public function getAuthorizeUrl()
+  {
+    return $this->authorizeUrl;
+}
+
+/**
+ * @param string $authorizeUrl
+ */
+public function setAuthorizeUrl($authorizeUrl)
+  {
+    $this->authorizeUrl = $authorizeUrl;
+    
+    return $this;
+}
+/**
+ * @return the $organizerKey
+ */
+public function getOrganizerKey()
+  {
+    return $this->organizerKey;
+}
+
+/**
+ * @param field_type $organizerKey
+ */
+public function setOrganizerKey($organizerKey)
+  {
+    $this->organizerKey = $organizerKey;
+    
+    return $this;
+}
+
+
 
 }
 
