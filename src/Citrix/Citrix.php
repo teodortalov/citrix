@@ -53,7 +53,7 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
   
   public function processResponse(){
     $response = $this->getResponse();
-var_dump($response);
+
     if(empty($response)){
       return $this;
     }

@@ -17,11 +17,14 @@ class Consumer extends EntityAbstract implements EntityAware
   }
   public function populate(){
     $data = $this->getData();
-    
-    $this->id =  $data['registrantKey'];
+
     $this->firstName =  $data['firstName'];
     $this->lastName =  $data['lastName'];
     $this->email =  $data['email'];
+    
+    if(isset($data['registrantKey'])){
+     $this->id =  $data['registrantKey'];
+    }
     
     if(isset($data['status'])){
      $this->status =  $data['status'];

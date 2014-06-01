@@ -19,6 +19,7 @@ abstract class ServiceAbstract
     $ch = curl_init(); // initiate curl
     
     if($this->getHttpMethod() == 'POST'){
+      var_dump($this->getParams()); exit;
       curl_setopt($ch, CURLOPT_POST, true); // tell curl you want to post something
       curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParams()); // define what you want to post
     }else{
@@ -40,7 +41,7 @@ abstract class ServiceAbstract
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // return the output in string format
     $output = curl_exec($ch); // execute
     curl_close($ch); // close curl handle
-    
+    var_dump($output);
     $this->setResponse($output);
     return $this;
   }
