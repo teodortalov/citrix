@@ -7,6 +7,3 @@ require_once 'vendor/autoload.php';
 
 
 use Citrix\Citrix;
-
-$citrix = new Citrix('ZOyODCZyVVDHCrMzzcwqOvqXaG5iAmpX');
-$citrix->auth('support@charityhowto.com', 'kEjjco5uGF');
