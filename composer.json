@@ -13,7 +13,7 @@
             "Citrix" : "src/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "repositories" : [{
         "type" : "vcs",
         "url" : "https://github.com/teodortalov/citrix.git"
