@@ -140,7 +140,12 @@ public function getResponse()
  */
 public function setResponse($response)
   {
-   
+
+    if(is_object($response)){
+      $this->response = $response;
+      return $this;
+    }
+    
     $this->response = (array) json_decode($response, true);
     return $this;
 }

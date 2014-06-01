@@ -2,6 +2,7 @@
 namespace Citrix;
 
 use Citrix\Entity\Webinar;
+use Citrix\Entity\Consumer;
 
 class GoToWebinar extends ServiceAbstract implements CitrixApiAware
 {
@@ -24,13 +25,12 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     return $this->getResponse();
   }
   public function getWebinar($webinarKey){
-    
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars/' . $webinarKey;
     $this->setHttpMethod('GET')
          ->setUrl($url)
          ->sendRequest($this->getClient()->getAccessToken())
          ->processResponse();
-    
+
     return $this->getResponse();
   }
   public function getRegistrants($webinarKey){
@@ -72,6 +72,12 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     foreach ($response as $entity){
       if(isset($entity['webinarKey'])){
         $webinar = new Webinar($this->getClient());
+        $webinar->setData($entity)->populate();
+        $collection->append($webinar);
+      }
+      
+      if(isset($entity['registrantKey'])){
+        $webinar = new Consumer($this->getClient());
         $webinar->setData($entity)->populate();
         $collection->append($webinar);
       }

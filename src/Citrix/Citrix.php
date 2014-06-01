@@ -53,6 +53,16 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
   
   public function processResponse(){
     $response = $this->getResponse();
+var_dump($response);
+    if(empty($response)){
+      return $this;
+    }
+    
+    if(isset($response['int_err_code'])){
+      $this->addError($response['msg']);
+      return $this;
+    }
+    
     $this->setAccessToken($response['access_token']);
     $this->setOrganizerKey($response['organizer_key']);
     return $this;

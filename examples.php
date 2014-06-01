@@ -9,15 +9,15 @@ use Citrix\Citrix;
 use Citrix\GoToWebinar;
 
 $client = new Citrix('ZOyODCZyVVDHCrMzzcwqOvqXaG5iAmpX');
-$client->auth('support@charityhowto.com', 'kEjjco5uGF');
+
 
 $goToWebinar = new GoToWebinar($client);
 $webinars = $goToWebinar->getUpcoming();
-var_dump($webinars); exit;
+
 $webinar = reset($webinars);
-$webinarInfo = $goToWebinar->getWebinar($webinar['webinarKey']);
+$webinarInfo = $goToWebinar->getWebinar($webinar->getId());
 
-$registrants = $goToWebinar->getRegistrants($webinar['webinarKey']);
-
+$registrants = $webinar->getRegistrants();
+var_dump($registrants);
 
 
