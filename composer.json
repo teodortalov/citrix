@@ -1,5 +1,5 @@
 {
-    "name": "ttalov/citrix",
+    "name": "teodortalov/citrix",
     "description": "GoToMeeting and GoToWebinar API Interface in PHP",
     "license": "MTI",
     "authors": [
@@ -13,7 +13,12 @@
             "Citrix" : "src/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
+    "repositories" : [{
+        "type" : "vcs",
+        "url" : "https://github.com/teodortalov/citrix.git"
+        }
+    ],
     "require": {
 
     }
