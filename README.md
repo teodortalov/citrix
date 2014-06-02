@@ -1,7 +1,7 @@
 Citrix API - PHP warpper around GoToWebinar APIs - 2014
 ======
 
-Install via composer
+Install via Composer
 --
 
 `require "teodortalov/citrix: *"`
@@ -29,7 +29,7 @@ Generally, the things you need the most are the `access_token` and `organizer_ke
 The code will handle all the authentication stuff for you, so you don't really have to worry about that. 
 
 Getting upcoming webinars
-===
+--
 
 In order to get all the upcoming webinars, you have to do this:
 
@@ -39,7 +39,7 @@ In order to get all the upcoming webinars, you have to do this:
 
 
 Register a user for a webinar
-====
+--
 
 You can really easily register somebody for a webinar. Basically, all you need to do is this:
 
@@ -62,7 +62,7 @@ Alternatively, you can register a user for a webinar by providing the `webinarKe
     $goToWebinar->register($webinarKey, $registrantData);
 
 Error handling
-====
+--
 
 The code does handle errors but it fails silently. You can check for errors like so:
 
@@ -81,6 +81,16 @@ The code does handle errors but it fails silently. You can check for errors like
        
     //no errors, continue...
     die('Registration was successful.');
+
+You can also display/get all errors like so:
+
+    $registration->getErrors();
+
+Also you can push new errors like so:
+
+    $registration->addError('Something went wrong!!!');
+
+Error handling should be available everywhere, so you should always be able to call `hasErrors()` and check for errors.
 
   [1]: https://developer.citrixonline.com/user/register
   [2]: http://GoToWebinar.com
