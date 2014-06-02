@@ -92,5 +92,11 @@ Also you can push new errors like so:
 
 Error handling should be available everywhere, so you should always be able to call `hasErrors()` and check for errors.
 
+Contributions - Fork, Fork, Fork
+--
+
+If you would like to help maintain this project and/or if you have any questions or comments about the library's design or implementation I'd love to hear from you.
+
+
   [1]: https://developer.citrixonline.com/user/register
   [2]: http://GoToWebinar.com
