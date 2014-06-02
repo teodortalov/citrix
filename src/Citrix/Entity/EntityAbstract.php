@@ -1,11 +1,25 @@
 <?php
 namespace Citrix\Entity;
 
+/**
+ * Provides common functionality used accross the codebase.
+ * @abstract
+ *
+ */
 abstract class EntityAbstract
 {
 
+  /**
+   * Instance of \Citrix\Citrix 
+   * @var \Citrix\Citrix
+   */
   protected $client;
 
+  /**
+   * Data that is to be passed to parent classes,
+   * just getters and setters that's all
+   * @var Array
+   */
   protected $data;
 
   /**
@@ -19,9 +33,9 @@ abstract class EntityAbstract
 
   /**
    *
-   * @param field_type $client          
+   * @param \Citrix\Citrix $client          
    */
-  protected function setClient($client)
+  protected function setClient(\Citrix\Citrix $client)
   {
     $this->client = $client;
     
@@ -39,7 +53,7 @@ abstract class EntityAbstract
 
   /**
    *
-   * @param field_type $data          
+   * @param array $data          
    */
   public function setData($data)
   {
@@ -48,8 +62,14 @@ abstract class EntityAbstract
     return $this;
   }
 
+  /**
+   * Converts class variables to array
+   * 
+   * @return array
+   */
   public function toArray()
   {
+    //list of variables to be skipped
     $toUnset = array(
       'client',
       'data'

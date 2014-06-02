@@ -1,18 +1,60 @@
 <?php
 namespace Citrix;
 
+/**
+ * Citrix Authentication
+ *
+ * Use this class to authenticate into Citrix APIs.
+ *
+ * @uses \Citrix\ServiceAbstract
+ * @uses \Citrix\CitrixApiAware
+ */
 class Citrix extends ServiceAbstract implements CitrixApiAware
 {
+
+  /**
+   * Authentication URL
+   * @var String
+   */
   private $authorizeUrl = 'https://api.citrixonline.com/oauth/access_token';
 
+  /**
+   * API key or Secret Key in Citrix's Developer Portal
+   * @var String
+   */
   private $apiKey;
+
+  /**
+   * Access Token
+   * @var String
+   */
   private $accessToken;
+
+  /**
+   * Organizer Key
+   * @var int
+   */
   private $organizerKey;
+
+  /**
+   * Being here bu passing the api key
+   * 
+   * @param String $apiKey          
+   */
   public function __construct($apiKey)
   {
     $this->setApiKey($apiKey);
   }
 
+  /**
+   * Authenticate by passing username and password. Those are 
+   * the same username and password that you use to login to
+   * www.gotowebinar.com
+   * 
+   * @param String $username          
+   * @param String $password          
+   * @return \Citrix\Citrix
+   */
   public function auth($username, $password)
   {
     $params = array(
@@ -23,10 +65,10 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
     );
     
     $this->setHttpMethod('GET')
-         ->setUrl($this->authorizeUrl)
-         ->setParams($params)
-         ->sendRequest()
-         ->processResponse();
+      ->setUrl($this->authorizeUrl)
+      ->setParams($params)
+      ->sendRequest()
+      ->processResponse();
     
     return $this;
   }
@@ -42,7 +84,7 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
 
   /**
    *
-   * @param field_type $apiKey          
+   * @param String $apiKey          
    */
   public function setApiKey($apiKey)
   {
@@ -50,15 +92,19 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
     
     return $this;
   }
-  
-  public function processResponse(){
-    $response = $this->getResponse();
 
-    if(empty($response)){
+  /* (non-PHPdoc)
+   * @see \Citrix\CitrixApiAware::processResponse()
+   */
+  public function processResponse()
+  {
+    $response = $this->getResponse();
+    
+    if (empty($response)) {
       return $this;
     }
     
-    if(isset($response['int_err_code'])){
+    if (isset($response['int_err_code'])) {
       $this->addError($response['msg']);
       return $this;
     }
@@ -67,60 +113,64 @@ class Citrix extends ServiceAbstract implements CitrixApiAware
     $this->setOrganizerKey($response['organizer_key']);
     return $this;
   }
-/**
- * @return the $accessToken
- */
-public function getAccessToken()
+
+  /**
+   *
+   * @return the $accessToken
+   */
+  public function getAccessToken()
   {
     return $this->accessToken;
-}
+  }
 
-/**
- * @param field_type $accessToken
- */
-public function setAccessToken($accessToken)
+  /**
+   *
+   * @param String $accessToken          
+   */
+  public function setAccessToken($accessToken)
   {
     $this->accessToken = $accessToken;
     
     return $this;
-}
-/**
- * @return the $authorizeUrl
- */
-public function getAuthorizeUrl()
+  }
+
+  /**
+   *
+   * @return the $authorizeUrl
+   */
+  public function getAuthorizeUrl()
   {
     return $this->authorizeUrl;
-}
+  }
 
-/**
- * @param string $authorizeUrl
- */
-public function setAuthorizeUrl($authorizeUrl)
+  /**
+   *
+   * @param string $authorizeUrl          
+   */
+  public function setAuthorizeUrl($authorizeUrl)
   {
     $this->authorizeUrl = $authorizeUrl;
     
     return $this;
-}
-/**
- * @return the $organizerKey
- */
-public function getOrganizerKey()
+  }
+
+  /**
+   *
+   * @return the $organizerKey
+   */
+  public function getOrganizerKey()
   {
     return $this->organizerKey;
-}
+  }
 
-/**
- * @param field_type $organizerKey
- */
-public function setOrganizerKey($organizerKey)
+  /**
+   *
+   * @param int $organizerKey          
+   */
+  public function setOrganizerKey($organizerKey)
   {
     $this->organizerKey = $organizerKey;
     
     return $this;
+  }
 }
-
-
-
-}
-
-?>

@@ -1,30 +1,89 @@
 <?php
 namespace Citrix\Entity;
 
+/**
+ * Consumer Entity
+ *
+ * Contains all fields for registratns and attendees. Consumer
+ * is an entity that merges both registratns and attendees.
+ *
+ * @uses \Citrix\Entity\EntityAbstract
+ * @uses \Citrix\Entity\EntityAware
+ *      
+ */
 class Consumer extends EntityAbstract implements EntityAware
 {
 
+  /**
+   * Unique identifier, in Citrix World
+   * this is called RegistrantKey or AtendeeKey
+   * 
+   * @var integer
+   */
   public $id;
 
+  /**
+   * First Name
+   * 
+   * @var String
+   */
   public $firstName;
 
+  /**
+   * Last Name
+   * 
+   * @var String
+   */
   public $lastName;
 
+  /**
+   * Email Address
+   * 
+   * @var String
+   */
   public $email;
 
+  /**
+   * Status of Consumer
+   * 
+   * @var String
+   */
   public $status;
 
+  /**
+   * Registration Date
+   * 
+   * @var \DateTime
+   */
   public $registrationDate;
 
+  /**
+   * Join U
+   * 
+   * @var String
+   */
   public $joinUrl;
 
+  /**
+   * Timezone
+   * 
+   * @var String
+   */
   public $timeZone = 'America/New_York';
 
+  /**
+   * Begin here by injecting authentication object.
+   *
+   * @param \Citrix\Citrix $client          
+   */
   public function __construct(\Citrix\Citrix $client)
   {
     $this->setClient($client);
   }
-
+  
+  /*
+   * (non-PHPdoc) @see \Citrix\Entity\EntityAware::populate()
+   */
   public function populate()
   {
     $data = $this->getData();
@@ -62,7 +121,7 @@ class Consumer extends EntityAbstract implements EntityAware
 
   /**
    *
-   * @param field_type $email          
+   * @param String $email          
    */
   public function setEmail($email)
   {
@@ -82,7 +141,7 @@ class Consumer extends EntityAbstract implements EntityAware
 
   /**
    *
-   * @param field_type $firstName          
+   * @param String $firstName          
    */
   public function setFirstName($firstName)
   {
@@ -102,7 +161,7 @@ class Consumer extends EntityAbstract implements EntityAware
 
   /**
    *
-   * @param field_type $id          
+   * @param String $id          
    */
   public function setId($id)
   {
@@ -122,7 +181,7 @@ class Consumer extends EntityAbstract implements EntityAware
 
   /**
    *
-   * @param field_type $joinUrl          
+   * @param String $joinUrl          
    */
   public function setJoinUrl($joinUrl)
   {
@@ -142,7 +201,7 @@ class Consumer extends EntityAbstract implements EntityAware
 
   /**
    *
-   * @param field_type $lastName          
+   * @param String $lastName          
    */
   public function setLastName($lastName)
   {
@@ -162,7 +221,7 @@ class Consumer extends EntityAbstract implements EntityAware
 
   /**
    *
-   * @param field_type $registrationDate          
+   * @param \DateTime $registrationDate          
    */
   public function setRegistrationDate($registrationDate)
   {
@@ -182,7 +241,7 @@ class Consumer extends EntityAbstract implements EntityAware
 
   /**
    *
-   * @param field_type $status          
+   * @param String $status          
    */
   public function setStatus($status)
   {
