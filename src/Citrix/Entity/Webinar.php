@@ -60,6 +60,12 @@ class Webinar extends EntityAbstract implements EntityAware
   public $timeZone = 'America/New_York';
 
   /**
+   * Registration/Join URL
+   * 
+   * @var String
+   */
+  public $registrationUrl;
+  /**
    * List of registrants/attendees for that webinar.
    * 
    * @var \ArrayObject
@@ -83,12 +89,13 @@ class Webinar extends EntityAbstract implements EntityAware
   {
     $data = $this->getData();
     
-    $this->id = $data['webinarKey'];
+    $this->id = (string) $data['webinarKey'];
     $this->subject = $data['subject'];
     $this->description = $data['description'];
     $this->organizerKey = $data['organizerKey'];
     $this->times = $data['times'];
     $this->timeZone = $data['timeZone'];
+    $this->registrationUrl = $data['registrationUrl'];
     return $this;
   }
 
@@ -258,4 +265,22 @@ class Webinar extends EntityAbstract implements EntityAware
     
     return $this;
   }
+  /**
+   * @return the $registrationUrl
+   */
+  public function getRegistrationUrl()
+    {
+      return $this->registrationUrl;
+  }
+  
+  /**
+   * @param string $registrationUrl
+   */
+  public function setRegistrationUrl($registrationUrl)
+    {
+      $this->registrationUrl = $registrationUrl;
+      
+      return $this;
+  }
+
 }

@@ -144,7 +144,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
         $collection->append($webinar);
       }
     }
-    
+
     $this->setResponse($collection);
   }
 }

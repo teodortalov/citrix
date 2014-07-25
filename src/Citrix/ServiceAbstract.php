@@ -83,7 +83,7 @@ abstract class ServiceAbstract
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // return the output in string format
     $output = curl_exec($ch); // execute
     curl_close($ch); // close curl handle
-    
+
     $this->setResponse($output);
     return $this;
   }
@@ -222,9 +222,10 @@ abstract class ServiceAbstract
       $this->response = $response;
       return $this;
     }
-    
-    $this->response = (array) json_decode($response, true);
+
+    $this->response = (array) json_decode($response, true, 512, JSON_BIGINT_AS_STRING);
     return $this;
+    
   }
 
   /**
