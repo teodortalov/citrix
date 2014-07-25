@@ -10,8 +10,8 @@ use Citrix\GoToWebinar;
 use Citrix\Entity\Consumer;
 
 //authenticate
-$client = new Citrix('ZOyODCZyVVDHCrMzzcwqOvqXaG5iAmpX');
-$client->auth('info@charityhowto.com', 'Jda084B0DP');
+$client = new Citrix('CONSUMER_KEY');
+$client->auth('USERNAME', 'PASSWORD');
 
 //get upcoming weibnars
 $goToWebinar = new GoToWebinar($client);
@@ -38,7 +38,7 @@ $consumer->setData($data)->populate();
 $registration = $webinar->registerConsumer($consumer);
 
 if($registration->hasErrors()){
-//   throw new \Exception($registration->getError());
+  throw new \Exception($registration->getError());
 }
 
 var_dump('You just registered!');
