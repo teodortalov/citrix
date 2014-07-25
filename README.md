@@ -38,6 +38,12 @@ In order to get all the upcoming webinars, you have to do this:
     var_dump($webinars) //this gives you all upcoming webinars
 
 
+If you would like to get the registration/join URL for a webinar you can do so like this:
+```php
+$webinar = reset($webinars);
+$webinar->getRegistrationUrl(); //https://attendee.gotowebinar.com/register/456905497806
+```
+
 Register a user for a webinar
 --
 
@@ -48,7 +54,7 @@ You can really easily register somebody for a webinar. Basically, all you need t
     $consumer->setData($data)->populate();
     
     //register a user for the very first upcoming webinar, @see Getting upcoming webinars
-    $webinar = reset($webinars)
+    $webinar = reset($webinars);
     $webinar->registerConsumer($consumer);
 
 As mentioned above `$client` you can get from **Authenticate and Get Going in 15 seconds** section, and `$webinar` you can get from  **Getting upcoming webinars** section. 
