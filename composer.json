@@ -1,6 +1,6 @@
 {
-    "name": "teodortalov/citrix",
-    "description": "PHP wrapper around Citrix - GoToMeeting and GoToWebinar APIs",
+    "name": "oytuntez/citrix",
+    "description": "PHP wrapper around Citrix - GoToMeeting and GoToWebinar APIs. Forked from teodortalov/citrix.",
     "keywords": ["Citrix", "Citrix API", "GoToWebinar API", "GoToMeeting API", "GoToWebinar"],
     "license": "MIT",
     "authors": [
