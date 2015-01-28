@@ -45,6 +45,23 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     
     return $this->getResponse();
   }
+
+  /**
+   * Get all webinars.
+   *
+   * @return \ArrayObject - Processed response
+   */
+  public function getWebinars(){
+
+    $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars';
+    $this->setHttpMethod('GET')
+        ->setUrl($url)
+        ->sendRequest($this->getClient()->getAccessToken())
+        ->processResponse();
+
+    return $this->getResponse();
+  }
+
   /**
    * Get info for a single webinar by passing the webinar id or 
    * in Citrix's terms webinarKey.
@@ -57,7 +74,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     $this->setHttpMethod('GET')
          ->setUrl($url)
          ->sendRequest($this->getClient()->getAccessToken())
-         ->processResponse();
+         ->processResponse(true);
 
     return $this->getResponse();
   }
@@ -75,6 +92,24 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
          ->sendRequest($this->getClient()->getAccessToken())
          ->processResponse();
     
+    return $this->getResponse();
+  }
+
+  /**
+   * Get a single registrant for a given webinar.
+   *
+   * @param int $webinarKey
+   * @param int $registrantKey
+   * @return \Citrix\Entity\Consumer
+   */
+  public function getRegistrant($webinarKey, $registrantKey){
+
+    $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants/'.$registrantKey;
+    $this->setHttpMethod('GET')
+        ->setUrl($url)
+        ->sendRequest($this->getClient()->getAccessToken())
+        ->processResponse(true);
+
     return $this->getResponse();
   }
   
@@ -118,7 +153,11 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
   /* (non-PHPdoc)
    * @see \Citrix\CitrixApiAware::processResponse()
    */
-  public function processResponse(){
+  /**
+   * @param bool $single    If we expect a single entity from the server, make this true.
+   *                        Single webinar request wasn't working because it was looping its properties.
+   */
+  public function processResponse($single = false){
     $response = $this->getResponse();
     $this->reset();
 
@@ -129,23 +168,38 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     if(isset($response['description'])){
       $this->addError($response['description']);
     }
-    
-    $collection = new \ArrayObject(array());
-    foreach ($response as $entity){
-      if(isset($entity['webinarKey'])){
-        $webinar = new Webinar($this->getClient());
-        $webinar->setData($entity)->populate();
-        $collection->append($webinar);
-      }
-      
-      if(isset($entity['registrantKey'])){
-        $webinar = new Consumer($this->getClient());
-        $webinar->setData($entity)->populate();
-        $collection->append($webinar);
-      }
-    }
 
-    $this->setResponse($collection);
+    if($single === true) {
+      if(isset($response['webinarKey'])){
+        $webinar = new Webinar($this->getClient());
+        $webinar->setData($response)->populate();
+        $this->setResponse($webinar);
+      }
+
+      if(isset($response['registrantKey'])){
+        $webinar = new Consumer($this->getClient());
+        $webinar->setData($response)->populate();
+        $this->setResponse($webinar);
+      }
+    } else {
+      $collection = new \ArrayObject(array());
+
+      foreach ($response as $entity){
+        if(isset($entity['webinarKey'])){
+          $webinar = new Webinar($this->getClient());
+          $webinar->setData($entity)->populate();
+          $collection->append($webinar);
+        }
+
+        if(isset($entity['registrantKey'])){
+          $webinar = new Consumer($this->getClient());
+          $webinar->setData($entity)->populate();
+          $collection->append($webinar);
+        }
+      }
+
+      $this->setResponse($collection);
+    }
   }
 }
 
