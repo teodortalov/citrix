@@ -63,6 +63,25 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
   }
 
   /**
+   * Get all webinars.
+   *
+   * @return \ArrayObject - Processed response
+   */
+  public function getPastWebinars(){
+    $since = date(DATE_ISO8601, mktime(0, 0, 0, 7, 1, 2000));
+    $until = date(DATE_ISO8601);
+    $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/historicalWebinars';
+
+    $this->setHttpMethod('GET')
+        ->setParams(['fromTime' => $since, 'toTime' => $until])
+         ->setUrl($url)
+         ->sendRequest($this->getClient()->getAccessToken())
+         ->processResponse();
+
+    return $this->getResponse();
+  }
+
+  /**
    * Get info for a single webinar by passing the webinar id or 
    * in Citrix's terms webinarKey.
    * 

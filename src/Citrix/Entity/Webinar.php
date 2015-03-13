@@ -95,7 +95,7 @@ class Webinar extends EntityAbstract implements EntityAware
     $this->organizerKey = $data['organizerKey'];
     $this->times = $data['times'];
     $this->timeZone = $data['timeZone'];
-    $this->registrationUrl = $data['registrationUrl'];
+    $this->registrationUrl = isset($data['registrationUrl']) ? $data['registrationUrl'] : null;
     return $this;
   }
 
