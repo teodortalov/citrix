@@ -74,9 +74,9 @@ class Consumer extends EntityAbstract implements EntityAware
   /**
    * Begin here by injecting authentication object.
    *
-   * @param \Citrix\Citrix $client          
+   * @param $client
    */
-  public function __construct(\Citrix\Citrix $client)
+  public function __construct($client)
   {
     $this->setClient($client);
   }

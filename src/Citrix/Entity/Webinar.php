@@ -75,9 +75,9 @@ class Webinar extends EntityAbstract implements EntityAware
   /**
    * Beging here by injecting an authentication object.
    * 
-   * @param \Citrix\Citrix $client          
+   * @param $client
    */
-  public function __construct(\Citrix\Citrix $client)
+  public function __construct($client)
   {
     $this->setClient($client);
     $this->consumers = new \ArrayObject();

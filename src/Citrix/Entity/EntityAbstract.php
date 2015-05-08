@@ -33,9 +33,9 @@ abstract class EntityAbstract
 
   /**
    *
-   * @param \Citrix\Citrix $client          
+   * @param $client
    */
-  protected function setClient(\Citrix\Citrix $client)
+  protected function setClient($client)
   {
     $this->client = $client;
     

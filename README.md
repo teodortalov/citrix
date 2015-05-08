@@ -1,4 +1,4 @@
-Citrix API - PHP warpper around GoToWebinar APIs - 2014
+Citrix API - PHP warpper around GoToWebinar APIs - 2015
 ======
 
 Install via Composer
@@ -37,6 +37,14 @@ In order to get all the upcoming webinars, you have to do this:
     $webinars = $goToWebinar->getUpcoming();
     var_dump($webinars) //this gives you all upcoming webinars
 
+Getting past webinars
+--
+
+In order to get all the past webinars, you have to do this:
+
+    $goToWebinar = new \Citrix\GoToWebinar($client); //@see $client definition above 
+    $webinars = $goToWebinar->getUpcoming();
+    var_dump($webinars) //this gives you all upcoming webinars
 
 If you would like to get the registration/join URL for a webinar you can do so like this:
 ```php
