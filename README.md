@@ -44,7 +44,7 @@ Getting past webinars
 In order to get all the past webinars, you have to do this:
 
     $goToWebinar = new \Citrix\GoToWebinar($client); //@see $client definition above 
-    $webinars = $goToWebinar->getUpcoming();
+    $webinars = $goToWebinar->getPast();
     var_dump($webinars) //this gives you all upcoming webinars
 
 If you would like to get the registration/join URL for a webinar you can do so like this:
