@@ -1,6 +1,7 @@
 <?php
 namespace Citrix;
 
+use Citrix\Authentication\Authentication;
 use Citrix\Entity\Webinar;
 use Citrix\Entity\Consumer;
 
@@ -23,9 +24,9 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
   /**
    * Begin here by passing an authentication class.
    * 
-   * @param Citrix $client
+   * @param $client - authentication client
    */
-  public function __construct(Citrix $client)
+  public function __construct($client)
   {
   	$this->setClient($client);
   }
@@ -63,11 +64,21 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
   }
 
   /**
-   * Get all webinars.
+   * Get past webinars.
    *
+   * @deprecated - Use GoToWebinar::getPast() instead2
    * @return \ArrayObject - Processed response
    */
   public function getPastWebinars(){
+    return $this->getPast();
+  }
+
+  /**
+   * Get all past webinars.
+   * @todo - add date range
+   * @return \ArrayObject - Processed response
+   */
+  public function getPast(){
     $since = date(DATE_ISO8601, mktime(0, 0, 0, 7, 1, 2000));
     $until = date(DATE_ISO8601);
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/historicalWebinars';

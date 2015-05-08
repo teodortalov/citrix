@@ -5,20 +5,17 @@ ini_set('display_errors', 1);
 
 require_once 'vendor/autoload.php';
 
-use Citrix\Citrix;
-use Citrix\GoToWebinar;
-use Citrix\Entity\Consumer;
 
-//authenticate
-$client = new Citrix('CONSUMER_KEY');
+//authenticate with direct authentication
+$client = new \Citrix\Authentication\Direct('CONSUMER_KEY');
 $client->auth('USERNAME', 'PASSWORD');
 
 //get upcoming weibnars
-$goToWebinar = new GoToWebinar($client);
+$goToWebinar = new \Citrix\GoToWebinar($client);
 $webinars = $goToWebinar->getUpcoming();
 
 //get info for a single webinar
-/* @var $webinar Citrix\Enttiy\Webinar */
+/* @var $webinar \Citrix\Entity\Webinar */
 $webinar = reset($webinars);
 
 //get registraion/join url
@@ -32,7 +29,7 @@ $registrants = $webinar->getRegistrants();
 
 //register a user for a webinar
 $data = array('email' => 'teodor@talov.com', 'firstName' => 'Teodor', 'lastName' => 'Talov');
-$consumer = new Consumer($client);
+$consumer = new \Citrix\Entity\Consumer($client);
 $consumer->setData($data)->populate();
 
 $registration = $webinar->registerConsumer($consumer);
@@ -42,3 +39,9 @@ if($registration->hasErrors()){
 }
 
 var_dump('You just registered!');
+
+//get past weibnars
+$goToWebinar = new \Citrix\GoToWebinar($client);
+$webinars = $goToWebinar->getPast();
+
+

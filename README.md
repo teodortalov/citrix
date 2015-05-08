@@ -1,4 +1,4 @@
-Citrix API - PHP warpper around GoToWebinar APIs - 2014
+Citrix API - PHP warpper around GoToWebinar APIs - 2015
 ======
 
 Install via Composer
@@ -12,12 +12,13 @@ Authenticate and Get Going in 15 seconds
 All you need in order to authenticate with Citrix's API is consumer key, which you can obtain by registering at [Citrix Developer Center][1]. After registering and adding your application, you will be given *Consumer Key*, 
 *Consumer Secret*, and *Callback URL*. You need the *Consumer Key* in order for your application to authenticate with Citrix. 
 
-In addition to the *Consumer Key*, you need your *username* and *password*, which is the one that you use to login to say [GoToWebinar.com][2].
+## Direct Authentication ##
+In addition to the *Consumer Key*, for **Direct Authentication** you need your *username* and *password*, which is the one that you use to login to say [GoToWebinar.com][2].
 
 You can authenticate to Citrix, and your GoToWebinar account respectively, like so:
 
 
-    $client = new \Citrix\Citrix('CONSUMER_KEY');
+    $client = new \Citrix\Authentication\Direct('CONSUMER_KEY');
     $client->auth('USERNAME', 'PASSWORD'); 
 
 
@@ -37,6 +38,14 @@ In order to get all the upcoming webinars, you have to do this:
     $webinars = $goToWebinar->getUpcoming();
     var_dump($webinars) //this gives you all upcoming webinars
 
+Getting past webinars
+--
+
+In order to get all the past webinars, you have to do this:
+
+    $goToWebinar = new \Citrix\GoToWebinar($client); //@see $client definition above 
+    $webinars = $goToWebinar->getUpcoming();
+    var_dump($webinars) //this gives you all upcoming webinars
 
 If you would like to get the registration/join URL for a webinar you can do so like this:
 ```php
