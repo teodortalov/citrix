@@ -125,6 +125,25 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     return $this->getResponse();
   }
 
+
+  /**
+   * Get registrations fields
+   * 
+   * @param int $webinarKey
+   * @return \Citrix\Entity\Consumer
+   */
+  public function getRegistrantsFields($webinarKey){
+    
+    $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants/fields';
+    $this->setHttpMethod('GET')
+         ->setUrl($url)
+         ->sendRequest($this->getClient()->getAccessToken())
+         ->processResponse();
+    
+    return $this->getResponse();
+  }
+
+
   /**
    * Get a single registrant for a given webinar.
    *
