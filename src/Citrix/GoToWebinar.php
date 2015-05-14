@@ -190,7 +190,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     $this->setHttpMethod('POST')
         ->setUrl($url)
         ->setParams($registrantData)
-        ->sendRequest($this->getClient()->getAccessToken())
+        ->sendRequest($this->getClient()->getAccessToken(), array('accept' => 'application/vnd.citrix.g2wapi-v1.1+json' ))
         ->processResponse();
 
     return $this;
@@ -233,43 +233,8 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
       $this->addError($response['description']);
     }
 
-    if($single === true) {
-      if(isset($response['webinarKey'])){
-        $webinar = new Webinar($this->getClient());
-        $webinar->setData($response)->populate();
-        $this->setResponse($webinar);
-      }
 
-      if(isset($response['registrantKey'])){
-        $webinar = new Consumer($this->getClient());
-        $webinar->setData($response)->populate();
-        $this->setResponse($webinar);
-      }
-    } else {
-      $collection = new \ArrayObject(array());
-
-
-      foreach ($response as $entity){
-        if(isset($entity['webinarKey'])){
-          $webinar = new Webinar($this->getClient());
-          $webinar->setData($entity)->populate();
-          $collection->append($webinar);
-        }
-
-        if(isset($entity['registrantKey'])){
-          $webinar = new Consumer($this->getClient());
-          $webinar->setData($entity)->populate();
-          $collection->append($webinar);
-        }
-
-        if( !isset($entity['registrantKey'] ) && !isset($entity['webinarKey']) ) {
-            $collection->exchangeArray( $response );
-        }
-
-      }
-
-      $this->setResponse($collection);
-    }
+    return $response;
   }
 }
 
