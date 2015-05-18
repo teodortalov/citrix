@@ -7,7 +7,7 @@ use Citrix\Entity\Consumer;
 
 /**
  * Use this to get/post data from/to Citrix.
- * 
+ *
  * @uses \Citrix\ServiceAbstract
  * @uses \Citrix\CitrixApiAware
  */
@@ -16,14 +16,14 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
 
   /**
    * Authentication Client
-   * 
+   *
    * @var Citrix
    */
   private $client;
 
   /**
    * Begin here by passing an authentication class.
-   * 
+   *
    * @param $client - authentication client
    */
   public function __construct($client)
@@ -33,17 +33,17 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
 
   /**
    * Get upcoming webinars.
-   * 
+   *
    * @return \ArrayObject - Processed response
    */
   public function getUpcoming(){
-    
+
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/upcomingWebinars';
     $this->setHttpMethod('GET')
          ->setUrl($url)
          ->sendRequest($this->getClient()->getAccessToken())
          ->processResponse();
-    
+
     return $this->getResponse();
   }
 
@@ -93,9 +93,9 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
   }
 
   /**
-   * Get info for a single webinar by passing the webinar id or 
+   * Get info for a single webinar by passing the webinar id or
    * in Citrix's terms webinarKey.
-   * 
+   *
    * @param int $webinarKey
    * @return \Citrix\Entity\Webinar
    */
@@ -110,20 +110,38 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
   }
   /**
    * Get all registrants for a given webinar.
-   * 
+   *
    * @param int $webinarKey
    * @return \Citrix\Entity\Consumer
    */
   public function getRegistrants($webinarKey){
-    
+
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants';
     $this->setHttpMethod('GET')
          ->setUrl($url)
          ->sendRequest($this->getClient()->getAccessToken())
          ->processResponse();
-    
+
     return $this->getResponse();
   }
+
+
+  /**
+   * Get registrations fields
+   *
+   * @param int $webinarKey
+   * @return \Citrix\Entity\Consumer
+   */
+  public function getRegistrantsFields($webinarKey){
+    $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants/fields';
+    $this->setHttpMethod('GET')
+         ->setUrl($url)
+         ->sendRequest($this->getClient()->getAccessToken())
+         ->processResponse();
+
+    return $this->getResponse();
+  }
+
 
   /**
    * Get a single registrant for a given webinar.
@@ -158,10 +176,10 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
 
     return $this->getResponse();
   }
-  
+
   /**
    * Register user for a webinar
-   * 
+   *
    * @param int $webinarKey
    * @param array $registrantData - email, firstName, lastName (required)
    * @return \Citrix\GoToWebinar
@@ -172,7 +190,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     $this->setHttpMethod('POST')
         ->setUrl($url)
         ->setParams($registrantData)
-        ->sendRequest($this->getClient()->getAccessToken())
+        ->sendRequest($this->getClient()->getAccessToken(), array('accept' => 'application/vnd.citrix.g2wapi-v1.1+json' ))
         ->processResponse();
 
     return $this;
@@ -188,12 +206,12 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
 
   /**
    *
-   * @param Citrix $client          
+   * @param Citrix $client
    */
   private function setClient($client)
   {
     $this->client = $client;
-    
+
     return $this;
   }
   /* (non-PHPdoc)
@@ -210,42 +228,13 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     if(isset($response['int_err_code'])){
       $this->addError($response['msg']);
     }
-    
+
     if(isset($response['description'])){
       $this->addError($response['description']);
     }
 
-    if($single === true) {
-      if(isset($response['webinarKey'])){
-        $webinar = new Webinar($this->getClient());
-        $webinar->setData($response)->populate();
-        $this->setResponse($webinar);
-      }
 
-      if(isset($response['registrantKey'])){
-        $webinar = new Consumer($this->getClient());
-        $webinar->setData($response)->populate();
-        $this->setResponse($webinar);
-      }
-    } else {
-      $collection = new \ArrayObject(array());
-
-      foreach ($response as $entity){
-        if(isset($entity['webinarKey'])){
-          $webinar = new Webinar($this->getClient());
-          $webinar->setData($entity)->populate();
-          $collection->append($webinar);
-        }
-
-        if(isset($entity['registrantKey'])){
-          $webinar = new Consumer($this->getClient());
-          $webinar->setData($entity)->populate();
-          $collection->append($webinar);
-        }
-      }
-
-      $this->setResponse($collection);
-    }
+    return $response;
   }
 }
 
