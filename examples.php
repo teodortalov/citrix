@@ -35,7 +35,7 @@ $consumer->setData($data)->populate();
 $registration = $webinar->registerConsumer($consumer);
 
 if($registration->hasErrors()){
-  throw new \Exception($registration->getError());
+  throw new \Citrix\Exception\ServiceException($registration->getError());
 }
 
 var_dump('You just registered!');
