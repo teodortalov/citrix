@@ -1,4 +1,5 @@
 <?php
+
 namespace Citrix;
 
 /**
@@ -6,8 +7,6 @@ namespace Citrix;
  * that get/post from/to Citrix APIs.
  *
  * @abstract
- *
- *
  */
 abstract class ServiceAbstract
 {
@@ -15,7 +14,7 @@ abstract class ServiceAbstract
   /**
    * List of errors that have occured
    * 
-   * @var Array
+   * @var array
    */
   private $errors = array();
 
@@ -23,21 +22,21 @@ abstract class ServiceAbstract
    * Params to be passed via POST or GET requests
    * to Citrix APIs
    *
-   * @var Array
+   * @var array
    */
   private $params = array();
 
   /**
    * URL to be called
    * 
-   * @var String
+   * @var string
    */
   private $url;
 
   /**
    * Response from Citrix API call
    * 
-   * @var Array
+   * @var array
    */
   private $response;
 
@@ -101,7 +100,7 @@ abstract class ServiceAbstract
   /**
    * Returns the first error
    *
-   * @return Ambigous <boolean, String>
+   * @return mixed
    */
   public function getError()
   {
@@ -113,7 +112,7 @@ abstract class ServiceAbstract
   /**
    * Get all errors
    * 
-   * @return Array
+   * @return array
    */
   public function getErrors()
   {
@@ -125,7 +124,7 @@ abstract class ServiceAbstract
   /**
    * Add a new error
    *
-   * @param String $message          
+   * @param string $message
    * @return \Citrix\ServiceAbstract
    */
   public function addError($message)
@@ -149,7 +148,7 @@ abstract class ServiceAbstract
 
   /**
    *
-   * @return the $params
+   * @return array $params
    */
   public function getParams()
   {
@@ -158,7 +157,8 @@ abstract class ServiceAbstract
 
   /**
    *
-   * @param Array $params          
+   * @param array $params
+   * @return $this
    */
   public function setParams($params)
   {
@@ -170,8 +170,8 @@ abstract class ServiceAbstract
   /**
    * Add a new param to be passed to API
    *
-   * @param String $key          
-   * @param String $value          
+   * @param string $key
+   * @param string $value
    * @return \Citrix\ServiceAbstract
    */
   public function addParam($key, $value)
@@ -183,7 +183,7 @@ abstract class ServiceAbstract
 
   /**
    *
-   * @return the $url
+   * @return string $url
    */
   public function getUrl()
   {
@@ -192,7 +192,8 @@ abstract class ServiceAbstract
 
   /**
    *
-   * @param String $url          
+   * @param string $url
+   * @return $this
    */
   public function setUrl($url)
   {
@@ -203,7 +204,7 @@ abstract class ServiceAbstract
 
   /**
    * Get the resposne
-   * @return the $response
+   * @return array $response
    */
   public function getResponse()
   {
@@ -212,8 +213,7 @@ abstract class ServiceAbstract
 
   /**
    *
-   * @param
-   *          Array | String $response
+   * @param array | string $response
    * @return \Citrix\ServiceAbstract
    */
   public function setResponse($response)
@@ -230,7 +230,7 @@ abstract class ServiceAbstract
 
   /**
    * Get the getHttpMethod
-   * @return the $httpMethod
+   * @return string $httpMethod
    */
   public function getHttpMethod()
   {
@@ -240,7 +240,7 @@ abstract class ServiceAbstract
   /**
    * Set the HttpMethod
    * 
-   * @param String $httpMethod
+   * @param string $httpMethod
    *          - GET | POST
    * @return \Citrix\ServiceAbstract
    */
