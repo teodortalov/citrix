@@ -1,4 +1,4 @@
-Citrix API - PHP warpper around GoToWebinar APIs - 2015
+Citrix API - PHP wrapper around GoToWebinar APIs - 2015
 ======
 
 Install via Composer
@@ -9,11 +9,11 @@ Install via Composer
 Authenticate and Get Going in 15 seconds
 --
 
-All you need in order to authenticate with Citrix's API is consumer key, which you can obtain by registering at [Citrix Developer Center][1]. After registering and adding your application, you will be given *Consumer Key*, 
-*Consumer Secret*, and *Callback URL*. You need the *Consumer Key* in order for your application to authenticate with Citrix. 
+All you need in order to authenticate with Citrix's API is a consumer key, which you can obtain by registering at [Citrix Developer Center][1]. After registering and adding your application, you will be given *Consumer Key*, 
+*Consumer Secret*, and *Callback URL*. You need the *Consumer Key* in order for your application to authenticate with Citrix using this library. 
 
 ## Direct Authentication ##
-In addition to the *Consumer Key*, for **Direct Authentication** you need your *username* and *password*, which is the one that you use to login to say [GoToWebinar.com][2].
+In addition to the *Consumer Key*, for **Direct Authentication** you need your *username* and *password*, which is the one that you use to login into [GoToWebinar.com][2].
 
 You can authenticate to Citrix, and your GoToWebinar account respectively, like so:
 
