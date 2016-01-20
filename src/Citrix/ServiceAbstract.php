@@ -223,7 +223,7 @@ abstract class ServiceAbstract
       return $this;
     }
 
-    $this->response = (array) json_decode($response, true, 512, JSON_BIGINT_AS_STRING);
+    $this->response = (array) json_decode($response, true, 512);
     return $this;
     
   }
