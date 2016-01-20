@@ -84,7 +84,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/historicalWebinars';
 
     $this->setHttpMethod('GET')
-        ->setParams(['fromTime' => $since, 'toTime' => $until])
+        ->setParams(array('fromTime' => $since, 'toTime' => $until))
          ->setUrl($url)
          ->sendRequest($this->getClient()->getAccessToken())
          ->processResponse();
