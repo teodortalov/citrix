@@ -188,7 +188,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
         ->setUrl($url)
         ->setParams($registrantData)
         ->sendRequest($this->getClient()->getAccessToken())
-        ->processResponse();
+        ->processResponse(true);
 
     return $this->getResponse();
   }
@@ -208,7 +208,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
         ->sendRequest($this->getClient()->getAccessToken())
         ->processResponse();
 
-    return $this->getResponse();
+    return $this;
   }
   
   /**
