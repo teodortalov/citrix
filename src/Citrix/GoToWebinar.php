@@ -205,7 +205,6 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants/' . $registrantKey;
     $this->setHttpMethod('DELETE')
         ->setUrl($url)
-        ->setParams($registrantData)
         ->sendRequest($this->getClient()->getAccessToken())
         ->processResponse();
 
