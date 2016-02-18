@@ -63,6 +63,8 @@ abstract class ServiceAbstract
     if ($this->getHttpMethod() == 'POST') {
       curl_setopt($ch, CURLOPT_POST, true); // tell curl you want to post something
       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->getParams())); // define what you want to post
+    } else if($this->getHttpMethod() != 'POST' && $this->getHttpMethod() != 'GET') {
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->getHttpMethod());
     } else {
       $url = $this->getUrl();
       $query = http_build_query($this->getParams());
@@ -223,7 +225,7 @@ abstract class ServiceAbstract
       return $this;
     }
 
-    $this->response = (array) json_decode($response, true, 512, JSON_BIGINT_AS_STRING);
+    $this->response = (array) json_decode($response, true, 512);
     return $this;
     
   }

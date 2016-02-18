@@ -84,7 +84,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/historicalWebinars';
 
     $this->setHttpMethod('GET')
-        ->setParams(['fromTime' => $since, 'toTime' => $until])
+        ->setParams(array('fromTime' => $since, 'toTime' => $until))
          ->setUrl($url)
          ->sendRequest($this->getClient()->getAccessToken())
          ->processResponse();
@@ -188,10 +188,29 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
         ->setUrl($url)
         ->setParams($registrantData)
         ->sendRequest($this->getClient()->getAccessToken())
+        ->processResponse(true);
+
+    return $this->getResponse();
+  }
+  
+  /**
+   * Register user for a webinar
+   * 
+   * @param int $webinarKey
+   * @param int $registrantKey
+   * @return 
+   */
+  public function unregister($webinarKey, $registrantKey){
+
+    $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants/' . $registrantKey;
+    $this->setHttpMethod('DELETE')
+        ->setUrl($url)
+        ->sendRequest($this->getClient()->getAccessToken())
         ->processResponse();
 
     return $this;
   }
+  
   /**
    *
    * @return the $client
