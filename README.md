@@ -24,8 +24,8 @@ You can authenticate to Citrix, and your GoToWebinar account respectively, like 
 
 Generally, the things you need the most are the `access_token` and `organizer_key`. You can retrieve those like this:
 
-    $client->getAccessToken() //returns your access token
-    $client->getOrganizerKey() //returns the organizer key
+    $client->getAccessToken(); //returns your access token
+    $client->getOrganizerKey(); //returns the organizer key
 
 The code will handle all the authentication stuff for you, so you don't really have to worry about that. 
 
@@ -36,7 +36,7 @@ In order to get all the upcoming webinars, you have to do this:
 
     $goToWebinar = new \Citrix\GoToWebinar($client); //@see $client definition above 
     $webinars = $goToWebinar->getUpcoming();
-    var_dump($webinars) //this gives you all upcoming webinars
+    var_dump($webinars); //this gives you all upcoming webinars
 
 Getting past webinars
 --
@@ -45,7 +45,7 @@ In order to get all the past webinars, you have to do this:
 
     $goToWebinar = new \Citrix\GoToWebinar($client); //@see $client definition above 
     $webinars = $goToWebinar->getPast();
-    var_dump($webinars) //this gives you all upcoming webinars
+    var_dump($webinars); //this gives you all upcoming webinars
 
 If you would like to get the registration/join URL for a webinar you can do so like this:
 ```php
@@ -86,7 +86,7 @@ The code does handle errors but it fails silently. You can check for errors like
     $consumer->setData($data)->populate();
     
     //register a user for the very first upcoming webinar, @see Getting upcoming webinars
-    $webinar = reset($webinars)
+    $webinar = reset($webinars);
     $registration = $webinar->registerConsumer($consumer);
     
     if($registration->hasErrors()){
