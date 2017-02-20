@@ -79,8 +79,11 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
    * @return \ArrayObject - Processed response
    */
   public function getPast(){
-    $since = date(DATE_ISO8601, mktime(0, 0, 0, 7, 1, 2000));
-    $until = date(DATE_ISO8601);
+    // The GTW api expects ISO8601 dates with no offset
+    // (with a literal 'Z' on the end). e.g 2017-02-20T03:00:00Z 
+    $since = date('Y-m-d\TH:i:s\Z', mktime(0, 0, 0, 7, 1, 2000));
+    $until = date('Y-m-d\TH:i:s\Z');
+
     $url = 'https://api.citrixonline.com/G2W/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/historicalWebinars';
 
     $this->setHttpMethod('GET')
