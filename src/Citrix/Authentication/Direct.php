@@ -27,7 +27,7 @@ class Direct extends ServiceAbstract implements CitrixApiAware
    * Authentication URL
    * @var String
    */
-  private $authorizeUrl = 'https://api.citrixonline.com/oauth/access_token';
+  private $authorizeUrl = 'https://api.getgo.com/oauth/access_token';
 
   /**
    * API key or Secret Key in Citrix's Developer Portal
