@@ -27,7 +27,7 @@ class Direct extends ServiceAbstract implements CitrixApiAware
    * Authentication URL
    * @var String
    */
-  private $authorizeUrl = 'https://api.getgo.com/oauth/access_token';
+  private $authorizeUrl = 'https://api.getgo.com/oauth/v2/token';
 
   /**
    * API key or Secret Key in Citrix's Developer Portal
@@ -64,7 +64,7 @@ class Direct extends ServiceAbstract implements CitrixApiAware
    *
    * @param String $username
    * @param String $password
-   * @return \Citrix\Citrix
+   * @return Direct|\Citrix\Citrix
    */
   public function auth($username, $password)
   {
@@ -85,29 +85,28 @@ class Direct extends ServiceAbstract implements CitrixApiAware
       'password' => $password,
       'client_id' => $this->getApiKey()
     );
-
-    $this->setHttpMethod('GET')
-      ->setUrl($this->authorizeUrl)
-      ->setParams($params)
-      ->sendRequest()
-      ->processResponse();
-
-    return $this;
+//TODO add setter and getter for secret key api
+      $this->setHttpMethod('POST')
+          ->setUrl($this->authorizeUrl)
+          ->setParams($params)
+          ->sendRequest(null,'Basic '.base64_encode($this->getApiKey().':'.env('CITRIX_CONSUMER_KEY_SECRET')))
+          ->processResponse();
+      return $this;
   }
 
-  /**
-   *
-   * @return the $apiKey
-   */
+    /**
+     * @return String $apiKey
+     */
   public function getApiKey()
   {
     return $this->apiKey;
   }
 
-  /**
-   *
-   * @param String $apiKey
-   */
+    /**
+     *
+     * @param String $apiKey
+     * @return Direct
+     */
   public function setApiKey($apiKey)
   {
     $this->apiKey = $apiKey;
@@ -136,19 +135,20 @@ class Direct extends ServiceAbstract implements CitrixApiAware
     return $this;
   }
 
-  /**
-   *
-   * @return the $accessToken
-   */
+    /**
+     *
+     * @return String $accessToken
+     */
   public function getAccessToken()
   {
     return $this->accessToken;
   }
 
-  /**
-   *
-   * @param String $accessToken
-   */
+    /**
+     *
+     * @param String $accessToken
+     * @return Direct
+     */
   public function setAccessToken($accessToken)
   {
     $this->accessToken = $accessToken;
@@ -158,7 +158,7 @@ class Direct extends ServiceAbstract implements CitrixApiAware
 
   /**
    *
-   * @return the $authorizeUrl
+   * @return String
    */
   public function getAuthorizeUrl()
   {
@@ -178,17 +178,18 @@ class Direct extends ServiceAbstract implements CitrixApiAware
 
   /**
    *
-   * @return the $organizerKey
+   * @return string
    */
   public function getOrganizerKey()
   {
     return $this->organizerKey;
   }
 
-  /**
-   *
-   * @param int $organizerKey
-   */
+    /**
+     *
+     * @param int $organizerKey
+     * @return Direct
+     */
   public function setOrganizerKey($organizerKey)
   {
     $this->organizerKey = $organizerKey;
