@@ -36,6 +36,12 @@ class Direct extends ServiceAbstract implements CitrixApiAware
   private $apiKey;
 
   /**
+   * API secret key or Secret Key in Citrix's Developer Portal
+   * @var String
+   */
+  private $apiSecretKey;
+
+  /**
    * Access Token
    * @var String
    */
@@ -47,14 +53,16 @@ class Direct extends ServiceAbstract implements CitrixApiAware
    */
   private $organizerKey;
 
-  /**
-   * Being here bu passing the api key
-   *
-   * @param String $apiKey
-   */
-  public function __construct($apiKey = null)
+    /**
+     * Being here bu passing the api key
+     *
+     * @param String $apiKey
+     * @param null $apiSecretKey
+     */
+  public function __construct($apiKey = null,$apiSecretKey = null)
   {
     $this->setApiKey($apiKey);
+    $this->setApiSecretKey($apiSecretKey);
   }
 
   /**
@@ -85,11 +93,10 @@ class Direct extends ServiceAbstract implements CitrixApiAware
       'password' => $password,
       'client_id' => $this->getApiKey()
     );
-//TODO add setter and getter for secret key api
-      $this->setHttpMethod('POST')
+    $this->setHttpMethod('POST')
           ->setUrl($this->authorizeUrl)
           ->setParams($params)
-          ->sendRequest(null,'Basic '.base64_encode($this->getApiKey().':'.env('CITRIX_CONSUMER_KEY_SECRET')))
+          ->sendRequest(null,'Basic '.base64_encode($this->getApiKey().':'.$this->getApiSecretKey()))
           ->processResponse();
       return $this;
   }
@@ -110,6 +117,27 @@ class Direct extends ServiceAbstract implements CitrixApiAware
   public function setApiKey($apiKey)
   {
     $this->apiKey = $apiKey;
+
+    return $this;
+  }
+
+
+  /**
+     * @return String $apiKey
+     */
+  public function getApiSecretKey()
+  {
+    return $this->apiSecretKey;
+  }
+
+    /**
+     *
+     * @param String $apiKey
+     * @return Direct
+     */
+  public function setApiSecretKey($apiSecretKey)
+  {
+    $this->apiSecretKey = $apiSecretKey;
 
     return $this;
   }
